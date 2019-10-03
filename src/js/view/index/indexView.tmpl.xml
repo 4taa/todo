@@ -1,0 +1,12 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <section class="content content_left-sided">
+        <div class="content__cell">
+                <span>Все еще не зарегистрированы? Создайте аккаунт и получите доступ ко всем возможностям нашего сервиса!</span>
+                <button class="button button_green js-signup">Зарегистрироваться</button>
+            </div>
+        <div class="content__cell">
+            <span>Уже зарегистрированы? Не пора ли добавить ноых задач в Ваш todo-лист?</span>
+            <button class="button button_purple js-login">Войти</button>
+        </div>
+    </section>
+</fest:template>

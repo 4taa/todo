@@ -1,0 +1,20 @@
+{
+    "rules": {
+      "align": false,
+      "arrow-parens": false,
+      "variable-name": false,
+      "no-return-await": false,
+      "prefer-object-spread": false,
+      "interface-name": [
+        true,
+        "always-prefix"
+      ],
+      "jsx-alignment": false,
+      "jsx-no-lambda": false,
+      "object-literal-key-quotes": false,
+      "no-empty": false,
+      "forin": false,
+      "no-implicit-dependencies": false
+    }
+  }
+  
