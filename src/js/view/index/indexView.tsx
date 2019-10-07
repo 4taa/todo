@@ -20,10 +20,12 @@ export default class IndexView {
     login: any;
     template: any;
     root: any;
-    constructor(root, repo) {
+    router: any;
+    constructor(root, repo, router) {
         this.template = template;
         this.root = root;
         this.repo = repo();
+        this.router = router;
     }
 
     render() {
@@ -34,39 +36,70 @@ export default class IndexView {
             ReactDOM.render(<Login/>, document.querySelector('.js-to-render'));
             document.querySelector('.js-submit-login').addEventListener('click', (event) => {
                 event.preventDefault();
-                this.repo.login({
-                    body: {
-                        login: (document.querySelector('.js-input-login') as HTMLInputElement).value,
-                        password: (document.querySelector('.js-input-pass') as HTMLInputElement).value
-                    }
-                });
-                ReactDOM.unmountComponentAtNode(document.querySelector('.js-to-render'));
+                if (document.cookie !== 'auth=0') {
+                    console.log('ERROR ON LOGIN! HAS COOKIE!')
+                } else {
+                    const resp = this.repo.login({
+                        login: {
+                            login: (document.querySelector('.js-input-login') as HTMLInputElement).value,
+                            password: (document.querySelector('.js-input-pass') as HTMLInputElement).value
+                        }
+                    })
+                    resp.then(data => {
+                        data.json().then(res => {
+                            console.log(res);
+                            if (!res.errors) {
+                                ReactDOM.unmountComponentAtNode(document.querySelector('.js-to-render'));
+                                this.router.toStartPage();
+                                document.cookie = `auth=${res.data.authUser.token}`;
+                            }
+                        });
+                    });
+                }
             })
             document.querySelector('.js-close-btn').addEventListener('click', () => {
                 ReactDOM.unmountComponentAtNode(document.querySelector('.js-to-render'));
             })
         });
 
-        console.log(this.repo)
         const signup = document.querySelector('.js-signup');
         signup.addEventListener('click', () => {
-            console.log(this.repo)
             ReactDOM.render(<Signup/>, document.querySelector('.js-to-render'));
             document.querySelector('.js-submit-signup').addEventListener('click', (event) => {
-                console.log(this.repo)
                 event.preventDefault();
-                this.repo.signUp({
-                    body: {
-                        email: (document.querySelector('.js-input-email') as HTMLInputElement).value,
-                        login: (document.querySelector('.js-input-login') as HTMLInputElement).value,
-                        password: (document.querySelector('.js-input-pass') as HTMLInputElement).value
-                    }
-                });
-                ReactDOM.unmountComponentAtNode(document.querySelector('.js-to-render'));
+                if (document.cookie !== 'auth=0') {
+                    console.log('ERROR ON LOGIN! HAS COOKIE!')
+                } else {
+                    const resp = this.repo.signUp({
+                        signup: {
+                            email: (document.querySelector('.js-input-email') as HTMLInputElement).value,
+                            login: (document.querySelector('.js-input-login') as HTMLInputElement).value,
+                            password: (document.querySelector('.js-input-pass') as HTMLInputElement).value
+                        }
+                    });
+                    resp.then(data => {
+                        data.json().then(res => {
+                            console.log(res);
+                            if (!res.data.errors) {
+                                document.cookie = `auth=${res.data.createUser.token}`;
+                                ReactDOM.unmountComponentAtNode(document.querySelector('.js-to-render'));
+                                this.router.toStartPage();
+                            }
+                        });
+                    });
+                }
             })
             document.querySelector('.js-close-btn').addEventListener('click', () => {
                 ReactDOM.unmountComponentAtNode(document.querySelector('.js-to-render'));
             })
         })
+    }
+
+    close() {
+        console.log('close...');
+    }
+
+    hide() {
+        console.log('hide...');
     }
 }

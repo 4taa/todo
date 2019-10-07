@@ -94,6 +94,32 @@ main > :last-child {
     z-index: 100000;
     text-align: center;
 }
+
+.js-add-board {
+    position: absolute;
+}
+
+.js-to-render-no {
+    width: 100%;
+    top: 0px;
+    left: 30%;
+    align-content: center;
+    text-align: -webkit-center;
+    z-index: 100000;
+    text-align: center;
+}
+
+.task-users-wrapper {
+    font-size: 9px;
+    display: inline;
+}
+
+.task-flex {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+
 .content__cell_form > h1 {
     margin: 0;
 

@@ -23,6 +23,14 @@ export default class Router {
         this.change('/', !delPrev);
     }
 
+    toLoginPage(delPrev: Boolean = false) {
+        if (delPrev) {
+            window.history.replaceState(null, null, '/qwe');
+        }
+
+        this.change('/qwe', !delPrev);
+    }
+
     add(path: String, root = this.root, view: any, data?: Object) {
         this.routes.set(path, {
             root,
