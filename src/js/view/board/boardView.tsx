@@ -38,10 +38,11 @@ export default class BoardView {
     renderBoards() {
         console.log(this.boards);
         ReactDOM.render(<Board {...this.boards}/>, document.querySelector('.js-to-render-boards'));
-        document.querySelector('.js-share-submit').addEventListener('click', (event) => {
+        document.querySelectorAll('.js-share-submit').forEach(elem => elem.addEventListener('click', (event: any) => {
             event.preventDefault();
-            this.shareBoard();
-        }) 
+            const boardId = event.target.parentNode.parentNode.parentNode.id;
+            this.shareBoard(boardId);
+        }));
     }
 
     preparePage() {
@@ -116,8 +117,13 @@ export default class BoardView {
         })
     }
 
-    shareBoard() {
-
+    shareBoard(boardId) {
+        this.repo.shareBoard({
+            shareBoard: {
+                id: boardId,
+                userName: (document.querySelector('.js-share-input') as HTMLInputElement).value,
+            }
+        })
     }
 
     logOut() {

@@ -24,13 +24,13 @@ const refactorMutation = (data: any): any => {
         reqToSend = {
             operationName: "findTodos",
             variables: {},
-            query: `query findTodos {\n  todos {\n    name\n    text\n    done\n    user {\n      name\n    }\n  }\n}\n`,
+            query: `query findTodos {todos { text id done name cards {id name comments {user {name token id}text}}}`,
         }
     } else if (data.getBoardsId) {
         reqToSend = {
             operationName: "usersTodo",
             variables: {},
-            query: `query usersTodo {\n  todosForUser(id: \"${data.getBoardsId.id}\") {\n    name\n    text\n    done\n    user {\n      name\n    }\n  }\n}\n\n`,
+            query: `query usersTodo {\n  todosForUser(id: \"${data.getBoardsId.id}\") {\n    id\n    name\n    text\n    done\n    user {\n      name\n    }\ncards{id comments{user{name id} text} users{name id} text name }  }\n}\n\n`,
         }
     } else if (data.logout) {
         reqToSend = {
@@ -49,6 +49,24 @@ const refactorMutation = (data: any): any => {
             operationName: "userById",
             variables: {},
             query: `query userById {\n  userById(id: \"${data.userById.id}\") {\n    name\n    token\n}\n}\n\n`
+        }
+    } else if (data.shareBoard) {
+        reqToSend = {
+            operationName: "share",
+            variables: {},
+            query: `mutation share {\n  shareBoard(input: {id: \"${data.shareBoard.id}\", userName: \"${data.shareBoard.userName}\"}) {\n    user {\n    id\n    name\n} text\n    name\n\n}\n}\n\n`
+        }
+    } else if (data.addCard) {
+        reqToSend = {
+            operationName: "addCard",
+            variables: {},
+            query: `mutation addCard {\naddCard(input: {text:\"${data.addCard.text}\", name:\"${data.addCard.name}\", todoId:\"${data.addCard.todoId}\", userId:\"${data.addCard.userById}\"}) {\nid\ncomments {\nuser {\nname\n}\ntext\n}\ntext\nname\n}\n}`
+        }
+    } else if (data.addComment) {
+        reqToSend = {
+            operationName: "addComment",
+            variables: {},
+            query: `mutation addComment {\naddCommentToCard(input:{cardId:\"${data.addCard.cardId}\", todoId: \"${data.addComment.todoId}\", userId: \"${data.addComment.userId}\", text:\"${data.addComment.text}\"}) {\nid\ncomments {\nuser {\nname\n}\ntext\n}\ntext\nname\n}\n}`
         }
     }
     return reqToSend;
@@ -106,15 +124,63 @@ export default class Repo {
         }
 
         const deleteBoard = (data: any) => {
-
+            return doRequest(refactorMutation(data)).then((response) => {
+                if (response.status === 200) {
+                    return response;
+                }
+            }, (error) => {
+                console.log(error);
+            });
         }
 
         const moveBoard = (data: any) => {
-
+            return doRequest(refactorMutation(data)).then((response) => {
+                if (response.status === 200) {
+                    return response;
+                }
+            }, (error) => {
+                console.log(error);
+            });
         }
 
         const changeBoard = (data: any) => {
-            
+            return doRequest(refactorMutation(data)).then((response) => {
+                if (response.status === 200) {
+                    return response;
+                }
+            }, (error) => {
+                console.log(error);
+            });
+        }
+        
+        const addCard = (data: any) => {
+            return doRequest(refactorMutation(data)).then((response) => {
+                if (response.status === 200) {
+                    return response;
+                }
+            }, (error) => {
+                console.log(error);
+            });
+        }
+        
+        const addComment = (data: any) => {
+            return doRequest(refactorMutation(data)).then((response) => {
+                if (response.status === 200) {
+                    return response;
+                }
+            }, (error) => {
+                console.log(error);
+            });
+        }
+
+        const shareBoard = (data: any) => {
+            return doRequest(refactorMutation(data)).then((response) => {
+                if (response.status === 200) {
+                    return response;
+                }
+            }, (error) => {
+                console.log(error);
+            });
         }
 
         const getBoards = (data: any) => {
@@ -167,6 +233,9 @@ export default class Repo {
             getUserById,
             getUserByToken,
             getBoardsId,
+            shareBoard,
+            addComment,
+            addCard,
         }
     }
 }
