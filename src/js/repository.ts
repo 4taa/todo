@@ -30,7 +30,7 @@ const refactorMutation = (data: any): any => {
         reqToSend = {
             operationName: "usersTodo",
             variables: {},
-            query: `query usersTodo {\n  todosForUser(id: \"${data.getBoardsId.id}\") {\n    id\n    name\n    text\n    done\n    user {\n      name\n    }\ncards{id comments{user{name id} text} users{name id} text name }  }\n}\n\n`,
+            query: `query usersTodo {\n  BoardsForUser(id: \"5d9fc1c3fdb6d206e6c82ac9\") {\n    id\n    name\n    text\n    done\n    user {\n      name\n    }\ncards{id comments{user{name id} text} users{name id} text name }  }\n}\n\n`,
         }
     } else if (data.logout) {
         reqToSend = {
