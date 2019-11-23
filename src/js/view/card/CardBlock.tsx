@@ -9,11 +9,11 @@ export default class extends React.Component<any> {
         return Object.keys(users).map((prop, i) => <Block key={i} className='task-users'>{users[i].name}</Block>)
     }
 
-    componentWillMount() {
-        console.log('kek mount', this.props)
+    commentsWrap(comments: any) {
+        return Object.keys(comments).map((prop, i) => <Block key={i} className='comments-text'>{comments[i].name}</Block>)
     }
 
-    render () {
+    render() {
         return Object.keys(this.props).map((prop, i) => {
                 <Block id={this.props[i].id} key={i} className='task content__cell js-task-block'>
                     <Block className='func-btns'>
@@ -31,15 +31,14 @@ export default class extends React.Component<any> {
                         <Block className='task-text'>{this.props[i].text}</Block>
                     </Block>
                     <Block className='task-users-wrapper'>
-                        <Block>Пользователи</Block>
+                        <Block>Исполнитель</Block>
                         {this.usersWrap(this.props[i].user)}
                     </Block>
-                    <Block className='comments-block js-comments-block'></Block>
+                    <Block className='comments-block'>
+                        <Block>Комментарии</Block>
+                        {this.commentsWrap(this.props[i].user)}
+                    </Block>
                 </Block>
         });
-    }
-
-    componentDidMount() {
-        console.log('did mount')
     }
 }

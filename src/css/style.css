@@ -95,10 +95,6 @@ main > :last-child {
     text-align: center;
 }
 
-.js-add-board {
-    position: absolute;
-}
-
 .js-to-render-no {
     width: 100%;
     top: 0px;
@@ -238,4 +234,9 @@ input.form-field__input::placeholder {
     /* align-items: flex-start; */
 
     padding-top: 6em;
+}
+
+.func-things-header {
+    display: inline;
+    justify-content: space-between;
 }

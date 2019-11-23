@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import Block from '../../components/Block';
 import Form from '../../components/Forms';
 import Labels from '../../components/Labels';
@@ -26,5 +27,22 @@ export default class extends React.Component<any> {
                 <Button className={'button button_purple js-submit-login'} type={'submit'}>Войти</Button>
             </Form>
         )
+    }
+
+    componentDidMount() {
+        document.querySelector('.js-submit-login').addEventListener('click', (event) => {
+            event.preventDefault();
+
+            this.submitLogin();
+        });
+
+        document.querySelector('.js-close-btn').addEventListener('click', () => ReactDOM.unmountComponentAtNode(document.querySelector('.js-to-render')))
+    }
+
+    private submitLogin() {
+        const login = (document.querySelector('.js-input-login') as HTMLInputElement).value;
+        const pass = (document.querySelector('.js-input-pass') as HTMLInputElement).value;
+
+        this.props.eventBus.callEvent('login', login, pass);
     }
 }
